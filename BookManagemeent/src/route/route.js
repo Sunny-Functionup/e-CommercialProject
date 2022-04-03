@@ -4,11 +4,16 @@ const router = express.Router();
 const userController = require("../controllers/userController");
 const bookController = require("../controllers/bookController");
 const reviewsController = require("../controllers/reviewsController")
+const awsController=require("../controllers/awsController")
 
 const BookMiddleware=require("../middlewares/bookMiddleware")
 
 
 router.post("/register", userController.createUser);
+
+// post for aws
+router.post("/write-file-aws",awsController.createAws)
+
 router.post("/login", userController.loginUser);
 
 router.post("/books",BookMiddleware.mid1, bookController.createBook);

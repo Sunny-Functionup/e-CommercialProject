@@ -22,8 +22,7 @@ const createBook = async function (req, res) {
 
 
     if (!isValidReqBody(data)) {
-      res.status(400)
-        .send({ status: false, message: "Please provide Books details" });
+      res.status(400).send({ status: false, message: "Please provide Books details" });
       return;
     }
 
@@ -50,16 +49,12 @@ const createBook = async function (req, res) {
       return;
     }
     if (!isValid(data.subcategory)) {
-      res
-        .status(400)
-        .send({ status: false, message: "Subcategory is required" });
+      res.status(400).send({ status: false, message: "Subcategory is required" });
       return;
     }
 
     if (!isValid(data.releasedAt)) {
-      res
-        .status(400)
-        .send({ status: false, message: "Released Date is required" });
+      res.status(400).send({ status: false, message: "Released Date is required" });
       return;
     }
 
@@ -68,9 +63,7 @@ const createBook = async function (req, res) {
       return
     }
     if (!/^[0-9a-fA-F]{24}$/.test(data.userId)) {
-      return res
-        .status(400)
-        .send({ status: false, message: "please provide valid UserId" });
+      return res.status(400).send({ status: false, message: "please provide valid UserId" });
     }
     if (!(/^\+?([1-9]{3})\)?[-. ]?([0-9]{10})$/.test(data.ISBN))) {
       return res.status(400).send({ status: false, message: 'please provide valid ISBN' })
@@ -86,7 +79,6 @@ const createBook = async function (req, res) {
       return res.status(400).send({status:false, msg:"Subcategory can't be empty"})
     }
     
-
     let isTitlePresent = await BookModel.findOne({ title: data.title });
     if (isTitlePresent) {
       return res.status(400).send({ status: false, message: "Book Title is already exist" });
@@ -109,7 +101,7 @@ const createBook = async function (req, res) {
   }
 };
 
-const getBook = async function (req, res) {
+const getBook = async function (req, res) { 
   try {
     let { userId, category, subcategory } = req.query;
     let obj = {};
@@ -120,9 +112,7 @@ const getBook = async function (req, res) {
     obj.isDeleted = false;
 
     if ((userId) && (!/^[0-9a-fA-F]{24}$/.test(userId))) {
-      return res
-        .status(400)
-        .send({ status: false, message: "please provide valid UserId" });
+      return res.status(400).send({ status: false, message: "please provide valid UserId" });
     }
 
     let bookData = await BookModel.find(obj).select({
@@ -154,9 +144,7 @@ const getBookByParams = async function (req, res) {
     let bookId = req.params.bookId;
 
     if (!/^[0-9a-fA-F]{24}$/.test(bookId)) {
-      return res
-        .status(400)
-        .send({ status: false, message: "please provide valid BookId" });
+      return res.status(400).send({ status: false, message: "please provide valid BookId" });
     }
 
     let isBookIdPresent = await BookModel.findOne({_id: bookId, isDeleted: false}).select({__v: 0});
@@ -181,14 +169,11 @@ const updateBook= async function(req, res){
     let data=req.body
 
     if (!/^[0-9a-fA-F]{24}$/.test(bookId)) {
-      return res
-        .status(400)
-        .send({ status: false, message: "please provide valid BookId" });
+      return res.status(400).send({ status: false, message: "please provide valid BookId" });
     }
 
     if (!isValidReqBody(data)) {
-      res.status(400)
-        .send({ status: false, message: "Please provide some data to update this Book" });
+      res.status(400).send({ status: false, message: "Please provide some data to update this Book" });
       return;
     }
 
@@ -235,7 +220,6 @@ const updateBook= async function(req, res){
       return res.status(400).send({ status: false, message: "ISBN no. is already exist you can't update it" });
     }
 
-
     let bookData= await BookModel.findByIdAndUpdate(bookId, data,{new:true})
     res.status(200).send({ status: true, message: bookData });
 
@@ -249,9 +233,7 @@ const deleteBook = async function(req, res){
     let bookId=req.params.bookId
 
     if (!/^[0-9a-fA-F]{24}$/.test(bookId)) {
-      return res
-        .status(400)
-        .send({ status: false, message: "please provide valid BookId" });
+      return res.status(400).send({ status: false, message: "please provide valid BookId" });
     }
 
     let isBookPresent = await BookModel.findOne({_id:bookId, isDeleted:false})

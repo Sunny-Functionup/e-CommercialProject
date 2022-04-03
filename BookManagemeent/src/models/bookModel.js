@@ -15,6 +15,7 @@ const BookSchema = new mongoose.Schema(
     deletedAt: { type: Date },
     isDeleted: { type: Boolean, default: false },
     releasedAt: { type: Date, required:"released Date is required" },
+      // bookCover:{type:String }
   },
   { timestamps: true }
 );

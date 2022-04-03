@@ -138,14 +138,10 @@ const deleteReviews = async function(req, res){
         reviewId=req.params.reviewId
 
         if (!/^[0-9a-fA-F]{24}$/.test(bookId)) {
-            return res
-              .status(400)
-              .send({ status: false, message: "please provide valid BookId" });
+            return res.status(400).send({ status: false, message: "please provide valid BookId" });
         }
         if (!/^[0-9a-fA-F]{24}$/.test(reviewId)) {
-            return res
-              .status(400)
-              .send({ status: false, message: "please provide valid ReviewId" });
+            return res.status(400).send({ status: false, message: "please provide valid ReviewId" });
         }
         const isBookIdPresent=await BookModel.findOneAndUpdate({_id:bookId, isDeleted:false},{ $inc: { reviews: -1 }},{new:true})
 

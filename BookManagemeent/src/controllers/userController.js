@@ -109,9 +109,7 @@ const loginUser = async function (req, res) {
 
   let isPasswordPresent = await UserModel.findOne({password:data.password});
   if (!isPasswordPresent)
-    return res.status(400).send({
-      status: false,
-      message: "Password is not correct, plz provide Correct Password",
+    return res.status(400).send({status: false, message: "Password is not correct, plz provide Correct Password",
     });
 
 
@@ -122,10 +120,11 @@ const loginUser = async function (req, res) {
     },
     "books-management",
     {expiresIn:"30m"})
+    
   res.status(201).send({ status: true, message: 'Success', data: token });
   }
   catch(err){
-    res.status(400).send({message: "Error", error: err.message})
+    res.status(500).send({message: "Error", error: err.message})
   }
 };
 
